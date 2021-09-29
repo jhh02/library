@@ -92,11 +92,14 @@ function displayOnScreen(obj) {
   const p3 = document.createElement("p");
   const p4 = document.createElement("button");
   const remove = document.createElement("button");
-  remove.innerText = "❌";
+  remove.innerText = "Remove";
   li.id = bookNumber;
-  p1.innerText = title;
-  p2.innerText = author;
-  p3.innerText = pages;
+  li.classList.add('card')
+  p4.classList.add('card-btn')
+  remove.classList.add('rm-btn')
+  p1.innerText = "Title: " + title;
+  p2.innerText = "Author: " + author;
+  p3.innerText = "Pages: " + pages;
   p4.innerText = read;
   li.appendChild(p1);
   li.appendChild(p2);
@@ -110,17 +113,18 @@ function displayOnScreen(obj) {
 }
 
 function addBookToLibaray(e) {
-  e.preventDefault();
-  const userData = getUserData();
-  const bookObj = makeBookObj(
-    userData[0],
-    userData[1],
-    userData[2],
-    userData[3]
-  );
-  myLibrary.push(bookObj);
-  cleanUserInput();
-  displayOnScreen(bookObj);
+  if(title.value && author.value && pages.value){
+    const userData = getUserData();
+    const bookObj = makeBookObj(
+      userData[0],
+      userData[1],
+      userData[2],
+      userData[3]
+    );
+    myLibrary.push(bookObj);
+    cleanUserInput();
+    displayOnScreen(bookObj);
+  }
 }
 
 function init() {

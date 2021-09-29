@@ -132,6 +132,30 @@ body {
   height: 100vh;
 }
 
+.top-menu {
+  font-size: 5em;
+  text-align: center;
+  padding: 30px;
+}
+
+.main {
+  text-align: center;
+}
+
+.add {
+  font-size: 1.4em;
+  background-color:black;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 10px 25px;
+}
+
+.add:hover {
+  background-color: grey;
+}
+
 .modal {
   position: fixed;
   left: 0;
@@ -145,28 +169,44 @@ body {
   transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
 }
 
+
+
+input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+}
+
 .modal-content {
+  display: flex;
+  line-height: 2em;
+  justify-content: space-between;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
   padding: 1rem 1.5rem;
-  width: 24rem;
+  width: 30rem;
   border-radius: 0.5rem;
+  font-size: 2em;
 }
 
-.close-button {
-  float: right;
+.modal-content input {
+  font-size: .8em;
+}
+
+.close-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.5rem;
   width: 1.5rem;
-  line-height: 1.5rem;
-  text-align: center;
   cursor: pointer;
   border-radius: 0.25rem;
   background-color: lightgray;
 }
 
-.close-button:hover {
+.close-btn:hover {
   background-color: darkgray;
 }
 
@@ -175,4 +215,59 @@ body {
   visibility: visible;
   transform: scale(1);
   transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.cards{
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 50px;
+  padding: 0 50px;
+}
+
+.card{
+  display: flex;
+  flex-flow: column;
+  border: solid black 1px;
+  border-radius: 10px;
+  padding: 20px 20px;
+  font-size: 1.5em;
+  gap:10px;
+  color: rgb(32,33,36);
+  background-color: white;
+  margin-right: 20px;
+  width: 200px;
+}
+
+.card-btn{
+  border: none;
+  background-color: rgb(34, 34, 216);
+  border-radius: 10px;
+  font-size: 1em;
+  color: white;
+}
+.card-btn:hover{
+  background-color: rgb(50, 137, 219);
+}
+.rm-btn{
+  border:none;
+  background-color: red;
+  border-radius: 10px;
+  font-size: 1em; 
+  color: white;
+}
+.rm-btn:hover{
+  background-color: palevioletred;
+}
+
+input[type='submit']{
+  background-color: black;
+  border:none;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 5px 15px;
+  color: white;
+}
+
+input[type='submit']:hover {
+  background-color: grey;
 }
