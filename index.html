@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+    <title>library</title>
+  </head>
+  <body>
+    <div class="top-menu">
+      <h1>Library</h1>
+    </div>
+    <div class="main">
+      <button class="add">Add a book</button>
+    </div>
+    <div class="modal">
+      <div class="modal-content">
+        <form action="" class="form">
+          <div class="title">
+            <label for="title">Title: </label>
+            <input type="text" name="title" required />
+          </div>
+          <div class="author">
+            <label for="author">Author: </label>
+            <input type="text" name="author" required />
+          </div>
+          <div class="pages">
+            <label for="pages">Pages: </label>
+            <input type="number" name="pages" required min="0" />
+          </div>
+          <div class="read">
+            <label for="read">Have you read it?</label>
+            <input type="checkbox" name="read" />
+          </div>
+          <div class="submit">
+            <input type="submit" value="submit" />
+          </div>
+        </form>
+        <span class="close-btn">&times;</span>
+      </div>
+    </div>
+    <div class="book-cards">
+      <ul></ul>
+    </div>
+  </body>
+</html>
