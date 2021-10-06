@@ -9,129 +9,123 @@ const submit = document.querySelector(".submit input");
 const bookcards = document.querySelector(".book-cards");
 const ul = document.querySelector("ul");
 
-let myLibrary = [];
-let bookNumber = 0;
+class Book {
+  static myLibrary = [];
+  static bookNumber = 0;
 
-function Book(title, author, page, read) {
-  this.title = title;
-  this.author = author;
-  this.page = page;
-  this.read = read ? "Read" : "Not read";
-}
-
-function toggleModal() {
-  modal.classList.toggle("show-modal");
-}
-
-function clickOnWindow(e) {
-  if (e.target === modal) {
-    toggleModal();
-  }
-}
-
-function getUserData() {
-  const userData = [title.value, author.value, pages.value, read.checked];
-  return userData;
-}
-
-function makeBookObj(title, author, page, read) {
-  const obj = new Book(title, author, page, read);
-  return obj;
-}
-
-function cleanUserInput() {
-  title.value = author.value = pages.value = "";
-  read.checked = false;
-}
-
-function removeChildren(parent) {
-  while (parent.firstChild) {
-    parent.removeChild(parent.firstChild);
-  }
-}
-
-function removeBook(e) {
-  bookNumber = 0;
-  const rmBtn = e.target;
-  rmBtn.parentElement.remove();
-  myLibrary = myLibrary.filter(
-    (obj, index) => index !== Number(rmBtn.parentElement.id)
-  );
-  removeChildren(ul);
-  myLibrary.forEach((obj) => {
-    displayOnScreen(obj);
-  });
-}
-
-function toggleRead(e) {
-  const parent = e.target.parentElement;
-  let toggleVal = e.target.innerText;
-  if (toggleVal === "Read") {
-    e.target.textContent = "Not read";
-  } else {
-    e.target.textContent = "Read";
+  constructor(title, author, page, read) {
+    this.title = title;
+    this.author = author;
+    this.page = page;
+    this.read = read ? "Read" : "Not read";
   }
 
-  if (parent.firstChild.textContent === myLibrary[parent.id].title) {
-    if (myLibrary[parent.id].read === "Read") {
-      myLibrary[parent.id].read = "Not read";
-    } else {
-      myLibrary[parent.id].read = "Read";
+  static addABook = (e) => {
+    if (title.value && author.value && pages.value) {
+      const bookObj = new Book(
+        title.value,
+        author.value,
+        pages.value,
+        read.checked
+      );
+      this.myLibrary.push(bookObj);
+      UI.resetUI();
+      UI.displayBooks(bookObj);
+    }
+  };
+
+  static removeBook = (e) => {
+    this.bookNumber = 0;
+    const removemBtn = e.target;
+    removemBtn.parentElement.remove();
+    this.myLibrary = this.myLibrary.filter(
+      (_obj, index) => index !== Number(removemBtn.parentElement.id)
+    );
+    this.removeAllChildren(ul);
+    this.myLibrary.forEach((obj) => {
+      UI.displayBooks(obj);
+    });
+  };
+
+  static removeAllChildren(parent) {
+    while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
     }
   }
+
+  static toggleRead = (e) => {
+    const toggleBtn = e.target;
+    const parent = toggleBtn.parentElement;
+    let toggleValue = toggleBtn.innerText;
+
+    toggleValue === "Read"
+      ? (toggleBtn.textContent = "Not read")
+      : (toggleBtn.textContent = "Read");
+
+    parent.firstChild.textContent === this.myLibrary[parent.id].title &&
+    this.myLibrary[parent.id].read === "Read"
+      ? (this.myLibrary[parent.id].read = "Not read")
+      : (this.myLibrary[parent.id].read = "Read");
+  };
 }
 
-function displayOnScreen(obj) {
-  const title = obj.title;
-  const author = obj.author;
-  const pages = obj.page;
-  const read = obj.read;
-  const li = document.createElement("li");
-  const p1 = document.createElement("p");
-  const p2 = document.createElement("p");
-  const p3 = document.createElement("p");
-  const p4 = document.createElement("button");
-  const remove = document.createElement("button");
-  remove.innerText = "Remove";
-  li.id = bookNumber;
-  li.classList.add('card')
-  p4.classList.add('card-btn')
-  remove.classList.add('rm-btn')
-  p1.innerText = "Title: " + title;
-  p2.innerText = "Author: " + author;
-  p3.innerText = "Pages: " + pages;
-  p4.innerText = read;
-  li.appendChild(p1);
-  li.appendChild(p2);
-  li.appendChild(p3);
-  li.appendChild(p4);
-  li.appendChild(remove);
-  ul.appendChild(li);
-  p4.addEventListener("click", toggleRead);
-  remove.addEventListener("click", removeBook);
-  bookNumber++;
+class Modal {
+  static toggleModal() {
+    modal.classList.toggle("show-modal");
+  }
+
+  static clickOnWindow = (e) => {
+    if (e.target === modal) {
+      this.toggleModal();
+    }
+  };
 }
 
-function addBookToLibaray(e) {
-  if(title.value && author.value && pages.value){
-    const userData = getUserData();
-    const bookObj = makeBookObj(
-      userData[0],
-      userData[1],
-      userData[2],
-      userData[3]
-    );
-    myLibrary.push(bookObj);
-    cleanUserInput();
-    displayOnScreen(bookObj);
+class UI {
+  static displayBooks(obj) {
+    const [title, author, pages, read] = [
+      obj.title,
+      obj.author,
+      obj.page,
+      obj.read,
+    ];
+    const li = document.createElement("li");
+    const p1 = document.createElement("p");
+    const p2 = document.createElement("p");
+    const p3 = document.createElement("p");
+    const readBtn = document.createElement("button");
+    const removeBtn = document.createElement("button");
+    removeBtn.innerText = "Remove";
+    li.id = Book.bookNumber;
+    li.classList.add("card");
+    readBtn.classList.add("card-btn");
+    removeBtn.classList.add("rm-btn");
+    p1.innerText = "Title: " + title;
+    p2.innerText = "Author: " + author;
+    p3.innerText = "Pages: " + pages;
+    readBtn.innerText = read;
+    li.appendChild(p1);
+    li.appendChild(p2);
+    li.appendChild(p3);
+    li.appendChild(readBtn);
+    li.appendChild(removeBtn);
+    ul.appendChild(li);
+    readBtn.addEventListener("click", Book.toggleRead);
+    removeBtn.addEventListener("click", Book.removeBook);
+    Book.bookNumber++;
+  }
+
+  static resetUI() {
+    title.value = author.value = pages.value = "";
+    read.checked = false;
   }
 }
 
 function init() {
-  addBook.addEventListener("click", toggleModal);
-  closeBtn.addEventListener("click", toggleModal);
-  window.addEventListener("click", clickOnWindow);
-  submit.addEventListener("click", addBookToLibaray);
+  addBook.addEventListener("click", Modal.toggleModal);
+  closeBtn.addEventListener("click", Modal.toggleModal);
+  window.addEventListener("click", Modal.clickOnWindow);
+  submit.addEventListener("click", Book.addABook);
 }
 
 init();
